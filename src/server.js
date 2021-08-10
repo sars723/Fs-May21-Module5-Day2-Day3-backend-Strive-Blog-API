@@ -9,9 +9,9 @@ const server = express()
 const port = 3001
 
 server.use(cors())
-server.use(express.json()) // If I do not specify this line of code BEFORE the routes, all the requests' bodies will be UNDEFINED
+server.use(express.json())
 
-// *************** ROUTES *****************
+
 
 server.use("/authors", authorsRouter)
 
