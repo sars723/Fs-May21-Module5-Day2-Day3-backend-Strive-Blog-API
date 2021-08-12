@@ -45,7 +45,6 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
                 title,
                 cover,
                 content,
-                comment,
                 name,
 
 
@@ -68,7 +67,7 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
                 comments:[
                     {
                         comment,
-                        name:name
+                       " name":name
                     }
                 ],
                 createdAt: new Date(),
@@ -99,9 +98,11 @@ blogsRouter.post("/:id/comments", /* blogsValidationMiddleware */checkValidation
             const blogs = await getBlogs()
             const blog=blogs.find(blog=>blog.id===req.params.id)
             if(blog){
-                const blogComment=blog.comments 
-                const newComment = { ...request.body, id: uniqid(), createdAt: new Date() }
+                const blogComment=blog.comment 
+                const newComment = { ...req.body, id: uniqid(), createdAt: new Date() }
                 blogComment.push(newComment)
+                blog.comment=blogComment
+                blogs.push(blog)
                 await writeBlogs(blogs)
                  res.status(201).send(newComment)
             }   

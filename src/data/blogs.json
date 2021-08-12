@@ -13,6 +13,7 @@
             "avatar": "https://eu.ui-avatars.com/api?name=PERSONAL FINANCE"
         },
         "content": "<div class='py-5 blog-content'><p>undefined</p></div>",
+        "comments":[],
         "createdAt": "2021-08-11T19:42:49.445Z",
         "updatedAt": "2021-08-11T19:42:49.445Z"
     },
@@ -30,6 +31,7 @@
             "avatar": "https://eu.ui-avatars.com/api?name=DEALS & BARGAINS"
         },
         "content": "<div class='py-5 blog-content'><p>undefined</p></div>",
+        "comments":[],
         "createdAt": "2021-08-11T19:44:12.725Z",
         "updatedAt": "2021-08-11T19:44:12.725Z"
     },
@@ -45,6 +47,7 @@
         "author": {
             "avatar": "https://eu.ui-avatars.com/api?name=undefined"
         },
+        "comments":[],
         "content": "<div class='py-5 blog-content'><p><div class='py-5 blog-content'><p>undefined</p></div></p></div>",
         "createdAt": "2021-08-12T11:28:55.491Z",
         "updatedAt": "2021-08-12T11:28:55.491Z"
@@ -62,7 +65,7 @@
             "avatar": "https://eu.ui-avatars.com/api?name=undefined"
         },
         "content": "<div class='py-5 blog-content'><p><div class='py-5 blog-content'><p>undefined</p></div></p></div>",
-        "comment": "gekki",
+        "comments":[],
         "createdAt": "2021-08-12T12:44:38.312Z",
         "updatedAt": "2021-08-12T12:44:38.312Z"
     },
@@ -79,7 +82,7 @@
             "avatar": "https://eu.ui-avatars.com/api?name=undefined"
         },
         "content": "<div class='py-5 blog-content'><p><div class='py-5 blog-content'><p>undefined</p></div></p></div>",
-        "comment": [],
+        "comments":[],
         "createdAt": "2021-08-12T12:46:09.224Z",
         "updatedAt": "2021-08-12T12:46:09.224Z"
     },
@@ -96,7 +99,7 @@
             "avatar": "https://eu.ui-avatars.com/api?name=undefined"
         },
         "content": "<div class='py-5 blog-content'><p><div class='py-5 blog-content'><p>undefined</p></div></p></div>",
-        "comment": [],
+        "comments":[],
         "createdAt": "2021-08-12T12:59:26.800Z",
         "updatedAt": "2021-08-12T12:59:26.800Z"
     },
