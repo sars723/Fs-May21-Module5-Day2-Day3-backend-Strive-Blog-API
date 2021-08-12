@@ -45,7 +45,7 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
                 title,
                 cover,
                 content,
-
+                comment,
                 name,
 
 
@@ -65,29 +65,69 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
                     "avatar": `https://eu.ui-avatars.com/api?name=${name}`,
                 },
                 content: `<div class='py-5 blog-content'><p>${content}</p></div>`,
-
+                comments:[
+                    {
+                        comment,
+                        name:name
+                    }
+                ],
                 createdAt: new Date(),
                 updatedAt: new Date(),
-
-
             }
-            /*   const newBlog = { ...req.body, id: uniqid(), createdAt: new Date() } */
-
-
-            /* const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
             const blogs = await getBlogs()
 
-
-
-            /*  blogs.push(newBlog) */
             blogs.push(blog)
 
-
-            /* fs.writeFileSync(blogsJSONPath, JSON.stringify(blogs)) */
             await writeBlogs(blogs)
 
-
             res.status(201).send(blog)
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+//comment
+blogsRouter.post("/:id/comments", /* blogsValidationMiddleware */checkValidationResult, checkValidationResult, async (req, res, next) => {
+    try {
+        const errorsList = validationResult(req)
+        if (!errorsList.isEmpty()) {
+
+            next(createHttpError(400, { errorsList }))
+        } else {
+       
+            const blogs = await getBlogs()
+            const blog=blogs.find(blog=>blog.id===req.params.id)
+            if(blog){
+                const blogComment=blog.comments 
+                const newComment = { ...request.body, id: uniqid(), createdAt: new Date() }
+                blogComment.push(newComment)
+                await writeBlogs(blogs)
+                 res.status(201).send(newComment)
+            }   
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+//cover
+blogsRouter.post("/:id/uploadCover", /* blogsValidationMiddleware */checkValidationResult, checkValidationResult, async (req, res, next) => {
+    try {
+        const errorsList = validationResult(req)
+        if (!errorsList.isEmpty()) {
+
+            next(createHttpError(400, { errorsList }))
+        } else {
+       
+            const blogs = await getBlogs()
+            const blog=blogs.find(blog=>blog.id===req.params.id)
+            if(blog){
+                
+               //
+                await writeBlogs(blogs)
+                 res.status(201).send(newComment)
+            }   
         }
     } catch (error) {
         next(error)
@@ -97,8 +137,6 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
 
 blogsRouter.get("/:blogID", async (req, res, next) => {
     try {
-
-        /* const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
         const blogs = await getBlogs()
 
         const blog = blogs.find(s => s.id === req.params.blogID)
