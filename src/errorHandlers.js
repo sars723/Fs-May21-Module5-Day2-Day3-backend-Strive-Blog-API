@@ -16,7 +16,7 @@ export const badRequestErrorHandler = (err, req, res, next) => {
 
 export const forbiddenErrorHandler = (err, req, res, next) => {
     if (err.status === 403) {
-        res.status(403).send({ success: false, message: err.message })
+        res.status(403).send({ success: false, message: err.message || "Not found!", errors: err.errors || [] })
     } else {
         next(err)
     }

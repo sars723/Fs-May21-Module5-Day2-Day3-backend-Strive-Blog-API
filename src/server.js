@@ -12,8 +12,6 @@ const port = 3001
 server.use(cors())
 server.use(express.json())
 
-
-
 server.use("/authors", authorsRouter)//to let server know about router
 
 server.use("/blogs", blogsRouter)

@@ -1,24 +1,28 @@
 import express from 'express'
-import { fileURLToPath } from 'url'
+/* import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
-import fs from 'fs'
+import fs from 'fs' */
 import uniqid from "uniqid"
 import { validationResult } from "express-validator"
 import createHttpError from "http-errors"
+import { getBlogs, writeBlogs } from '../../data/blogs.json'
 
-import { blogsValidationMiddleware } from "./validation.js"
+import { /* blogsValidationMiddleware */checkBlogPostSchema, checkValidationResult } from "./validation.js"
+
+
 const blogsRouter = express.Router()
 
-const currentFilePath = fileURLToPath(import.meta.url)
+/* const currentFilePath = fileURLToPath(import.meta.url)
 
 const currentDirPath = dirname(currentFilePath)
 
-const blogsJSONPath = join(currentDirPath, "blogs.json")
+const blogsJSONPath = join(currentDirPath, "blogs.json") */
 
-blogsRouter.get("/", (req, res, next) => {
+blogsRouter.get("/", async (req, res, next) => {
     try {
 
-        const blogs = JSON.parse(fs.readFileSync(blogsJSONPath))
+        /*   const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
+        const blogs = await getBlogs()
         console.log(blogs)
         res.send(blogs)
 
@@ -27,7 +31,7 @@ blogsRouter.get("/", (req, res, next) => {
     }
 })
 
-blogsRouter.post("/", blogsValidationMiddleware, (req, res, next) => {
+blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, checkValidationResult, async (req, res, next) => {
     try {
         const errorsList = validationResult(req)
         if (!errorsList.isEmpty()) {
@@ -35,46 +39,55 @@ blogsRouter.post("/", blogsValidationMiddleware, (req, res, next) => {
             next(createHttpError(400, { errorsList }))
         } else {
 
-            /* 
-                        const {
-                            category,
-                            title,
-                            cover,
-                            readTime: {
-                                value,
-                                unit
-                            },
-                            author: {
-                                name,
-                                avatar
-                            },
-                            content } = req.body
-            
-                        const blog = {
-                            id: uniqid(),
-                            category,
-                            title,
-                            cover,
-                            readTime: {
-                                value,
-                                unit
-                            },
-                            author: {
-                                name,
-                                "avatar": `https://eu.ui-avatars.com/api`,
-                            },
-                            content,
-            
-                            createdAt: new Date(),
-                            updatedAt: new Date(),
-            
-            
-                        } */
-            const newBlog = { ...req.body, id: uniqid(), createdAt: new Date() }
-            const blogs = JSON.parse(fs.readFileSync(blogsJSONPath))
-            blogs.push(newBlog)
-            fs.writeFileSync(blogsJSONPath, JSON.stringify(blogs))
-            res.status(201).send(newBlog)
+
+            const {
+                category,
+                title,
+                cover,
+                content,
+
+                name,
+
+
+            } = req.body
+            console.log("name=", name)
+            const blog = {
+                id: uniqid(),
+                category,
+                title,
+                cover,
+                readTime: {
+                    value: 2,
+                    unit: "minute"
+                },
+                author: {
+                    name: name,
+                    "avatar": `https://eu.ui-avatars.com/api?name=${name}`,
+                },
+                content: `<div class='py-5 blog-content'><p>${content}</p></div>`,
+
+                createdAt: new Date(),
+                updatedAt: new Date(),
+
+
+            }
+            /*   const newBlog = { ...req.body, id: uniqid(), createdAt: new Date() } */
+
+
+            /* const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
+            const blogs = await getBlogs()
+
+
+
+            /*  blogs.push(newBlog) */
+            blogs.push(blog)
+
+
+            /* fs.writeFileSync(blogsJSONPath, JSON.stringify(blogs)) */
+            await writeBlogs(blogs)
+
+
+            res.status(201).send(blog)
         }
     } catch (error) {
         next(error)
@@ -82,10 +95,11 @@ blogsRouter.post("/", blogsValidationMiddleware, (req, res, next) => {
 })
 
 
-blogsRouter.get("/:blogID", (req, res, next) => {
+blogsRouter.get("/:blogID", async (req, res, next) => {
     try {
 
-        const blogs = JSON.parse(fs.readFileSync(blogsJSONPath))
+        /* const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
+        const blogs = await getBlogs()
 
         const blog = blogs.find(s => s.id === req.params.blogID)
 
@@ -101,10 +115,11 @@ blogsRouter.get("/:blogID", (req, res, next) => {
 })
 
 
-blogsRouter.put("/:blogID", (req, res, next) => {
+blogsRouter.put("/:blogID", async (req, res, next) => {
     try {
 
-        const blogs = JSON.parse(fs.readFileSync(blogsJSONPath))
+        /*  const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
+        const blogs = await getBlogs()
 
 
         const remainingblogs = blogs.filter(blog => blog.id !== req.params.blogID)
@@ -114,7 +129,8 @@ blogsRouter.put("/:blogID", (req, res, next) => {
         remainingblogs.push(updatedblog)
 
 
-        fs.writeFileSync(blogsJSONPath, JSON.stringify(remainingblogs))
+        /* fs.writeFileSync(blogsJSONPath, JSON.stringify(remainingblogs)) */
+        await writeBlogs(remainingblogs)
 
         res.send(updatedblog)
     } catch (error) {
@@ -123,14 +139,16 @@ blogsRouter.put("/:blogID", (req, res, next) => {
 })
 
 
-blogsRouter.delete("/:blogID", (req, res, next) => {
+blogsRouter.delete("/:blogID", async (req, res, next) => {
     try {
 
-        const blogs = JSON.parse(fs.readFileSync(blogsJSONPath))
+        /* const blogs = JSON.parse(fs.readFileSync(blogsJSONPath)) */
+        const blogs = await getBlogs()
 
         const remainingblogs = blogs.filter(blog => blog.id !== req.params.blogID)
 
-        fs.writeFileSync(blogsJSONPath, JSON.stringify(remainingblogs))
+        /*  fs.writeFileSync(blogsJSONPath, JSON.stringify(remainingblogs)) */
+        await writeBlogs(remainingblogs)
 
         res.status(204).send()
     } catch (error) {
