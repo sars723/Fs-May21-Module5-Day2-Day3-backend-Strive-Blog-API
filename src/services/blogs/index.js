@@ -5,7 +5,7 @@ import fs from 'fs' */
 import uniqid from "uniqid"
 import { validationResult } from "express-validator"
 import createHttpError from "http-errors"
-import { getBlogs, writeBlogs } from '../../data/blogs.json'
+import { getBlogs, writeBlogs } from '../../lib/fs-tools.js'
 
 import { /* blogsValidationMiddleware */checkBlogPostSchema, checkValidationResult } from "./validation.js"
 
