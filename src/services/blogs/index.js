@@ -49,7 +49,7 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
 
 
             } = req.body
-            console.log("name=", name)
+            
             const blog = {
                 id: uniqid(),
                 category,

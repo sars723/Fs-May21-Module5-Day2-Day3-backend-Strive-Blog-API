@@ -8,12 +8,25 @@ import { notFoundErrorHandler, forbiddenErrorHandler, badRequestErrorHandler, ge
 import { join } from "path"
 const server = express()
 
-const port = 3001
+const port = process.env.PORT
 
 const publicFolderPath = join(process.cwd(), "public")
 
+const whiteList=[process.env.FE_DEV_URL]
+
+const corsOpts={origin:function(origin,next){
+    console.log("ORIGIN-->",origin)
+    if(whiteList.indexOf(origin)!==-1){
+        next(null,true)
+    }
+    else{
+        next(new Error(`Origin with ${origin} not allowed!`))
+    }
+}}
+
+
 server.use(express.static(publicFolderPath))
-server.use(cors())
+server.use(cors(corsOpts))
 server.use(express.json())
 
 server.use("/authors", authorsRouter)//to let server know about router

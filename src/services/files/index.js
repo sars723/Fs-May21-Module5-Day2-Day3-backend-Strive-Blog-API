@@ -11,6 +11,7 @@ filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) 
     try {
       console.log(req.file)
       const extension = extname(req.file.originalname) // someimage.png --> 7d7d.png
+      console.log(req.file.originalname)
       const fileName = `${req.params.blogId}${extension}`
       const url = `http://localhost:3001/img/blogs/${fileName}`
       await saveBlogsPicture(fileName, req.file.buffer)
