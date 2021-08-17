@@ -14,14 +14,16 @@ const publicFolderPath = join(process.cwd(), "public")
 
 const whiteList=[process.env.FE_DEV_URL,process.env.FE_PROD]
 
-const corsOpts={origin:function(origin,next){
-    console.log("ORIGIN-->",origin)
-    if (!origin || whitelist.indexOf(origin) !== -1) {callback(null, true)}
-
-    else{
-        next(new Error(`Origin with ${origin} not allowed!`))
+const corsOpts = {
+    origin: function(origin, next){
+      console.log('ORIGIN --> ', origin)
+      if(!origin ||whiteList.indexOf(origin) !== -1){ // if received origin is in the whitelist I'm going to allow that request
+        next(null, true)
+      }else{ // if it is not, I'm going to reject that request
+        next(new Error(`Origin ${origin} not allowed!`))
+      }
     }
-}}
+  }
 
 
 server.use(express.static(publicFolderPath))
