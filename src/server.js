@@ -12,13 +12,12 @@ const port = process.env.PORT
 
 const publicFolderPath = join(process.cwd(), "public")
 
-const whiteList=[process.env.FE_DEV_URL]
+const whiteList=[process.env.FE_DEV_URL,process.env.FE_PROD]
 
 const corsOpts={origin:function(origin,next){
     console.log("ORIGIN-->",origin)
-    if(whiteList.indexOf(origin)!==-1){
-        next(null,true)
-    }
+    if (!origin || whitelist.indexOf(origin) !== -1) {callback(null, true)}
+
     else{
         next(new Error(`Origin with ${origin} not allowed!`))
     }
