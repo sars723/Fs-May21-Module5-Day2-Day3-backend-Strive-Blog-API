@@ -61,9 +61,9 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
                 },
                 author: {
                     name: name,
-                    "avatar": `https://eu.ui-avatars.com/api?name=${name}`,
+                    avatar ,
                 },
-                content: `<div class='py-5 blog-content'><p>${content}</p></div>`,
+                content,
                 comments:[
                     {
                         comment,
