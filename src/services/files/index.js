@@ -22,7 +22,7 @@ filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) 
       await saveBlogsPicture(fileName, req.file.buffer)
       // FİND BLOG BY ID AND UPDATE COVER FIELD
       let  blogs = await  getBlogs()
-      console.log(blogs)
+      console.log(url)
       const blog = blogs.find(b=>b.id===req.params.blogId);
       console.log(blog)
       blog.cover=url
@@ -40,7 +40,7 @@ filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) 
       const blogs = await getBlogs()
       const blog=blogs.find(blog=>blog.id===req.params.id)
       const filename =  `${req.params.id}.pdf`
-      res.setHeader("Content-Disposition", `attachment; filename=${filename}`) // this header tells the browser to open the "save file as" dialog
+      res.setHeader("Content-Disposition", `attachment; filename=${filename}`) 
       const source =await getPDFReadableStream(blog)
       const destination = res
   

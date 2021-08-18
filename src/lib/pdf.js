@@ -32,7 +32,7 @@ export const getPDFReadableStream =async(blog)  => {
           },
         {
           text: `\nby ${blog.content}`, 
-          style: 'subheader' 
+          /* style: 'subheader'  */
           },  
          
      
@@ -42,13 +42,13 @@ export const getPDFReadableStream =async(blog)  => {
         fontSize: 18,
         bold: true
       },
-      subheader: {
+   /*    subheader: {
         fontSize: 15,
         bold: true
       },
       small: {
         fontSize: 8
-      }
+      } */
  }
 }
  /* ) */
