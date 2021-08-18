@@ -13,5 +13,4 @@ export const getBlogs = () => readJSON(blogsJSONPath)
 export const writeBlogs = (content) => writeJSON(blogsJSONPath, content)
 
 export const saveBlogsPicture = (filename, contentAsBuffer) => writeFile(join(publicFolderPath, filename), contentAsBuffer)
-
-/* export const getBlogReadableStream = () => createReadStream(blogsJSONPath) */
+ export const getBlogReadableStream = () => createReadStream(blogsJSONPath) 

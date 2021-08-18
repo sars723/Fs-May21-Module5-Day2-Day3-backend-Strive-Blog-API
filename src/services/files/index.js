@@ -4,10 +4,10 @@ import {extname,dirname,join} from "path"
 import { saveBlogsPicture,writeBlogs,getBlogs } from "../../lib/fs-tools.js"
 import {fileURLToPath} from "url"
 
-/* import { pipeline } from "stream"
+import { pipeline } from "stream"
 
 
-import { getPDFReadableStream } from "../../lib/pdf.js" */
+import { getPDFReadableStream } from "../../lib/pdf.js"
 
  
 
@@ -35,11 +35,13 @@ filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) 
       next(error)
     }
   })
- /*  filesRouter.get("/PDFDownload", async (req, res, next) => {
+  filesRouter.get("/PDFDownload/:id", async (req, res, next) => {
     try {
-      const filename = "blog.pdf"
+      const blogs = await getBlogs()
+      const blog=blogs.find(blog=>blog.id===req.params.id)
+      const filename =  `${req.params.id}.pdf`
       res.setHeader("Content-Disposition", `attachment; filename=${filename}`) // this header tells the browser to open the "save file as" dialog
-      const source = getPDFReadableStream()
+      const source =await getPDFReadableStream(blog)
       const destination = res
   
       pipeline(source, destination, err => {
@@ -49,7 +51,7 @@ filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) 
       next(error)
     }
   })
- */
+
 
   export default filesRouter
   
