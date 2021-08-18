@@ -18,7 +18,7 @@ filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) 
       const extension = extname(req.file.originalname) // someimage.png --> 7d7d.png
       console.log(req.file.originalname)
       const fileName = `${req.params.blogId}${extension}`
-      const url = `${process.env.FE_DEV_URL}/${fileName}`
+      const url = `http://localhost:3006/${fileName}`
       await saveBlogsPicture(fileName, req.file.buffer)
       // FİND BLOG BY ID AND UPDATE COVER FIELD
       let  blogs = await  getBlogs()
