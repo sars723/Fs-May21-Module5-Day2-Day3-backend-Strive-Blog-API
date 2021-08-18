@@ -22,14 +22,20 @@ export const getPDFReadableStream =async(blog)  => {
     content: [ 
       {
         text: blog.title,
-        style: 'header'
-        },
+        style: 'header',
+        margin: [ 5, 2, 10, 20 ]
+        }, 
         {
-          text: `\nby ${blog.author.name}`, 
+           
+            image: blog.cover,
+            width: 500
+          },
+        {
+          text: `\nby ${blog.content}`, 
           style: 'subheader' 
           },  
-          `\n${blog.cover}`,
-      `\n${blog.content}`,
+         
+     
     ],
     styles: {
       header: {
