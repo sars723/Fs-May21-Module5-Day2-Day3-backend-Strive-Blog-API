@@ -1,18 +1,24 @@
 import express from "express"
 import multer from "multer"
-import {extname,dirname,join} from "path"
+import {extname} from "path"
 import { saveBlogsPicture,writeBlogs,getBlogs } from "../../lib/fs-tools.js"
-import {fileURLToPath} from "url"
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 import { pipeline } from "stream"
 
-
 import { getPDFReadableStream } from "../../lib/pdf.js"
 
- 
+const cloudinaryStorage = new CloudinaryStorage({
+  cloudinary, // short hand of _____cloudinary: cloudinary____ // grabs cloudinary_url from .env
+  params: {
+      // optional params
+      folder: "files"
+  }
+})
 
 const filesRouter = express.Router()
-filesRouter.post("/:blogId", multer().single("blogPic"), async (req, res, next) => {
+filesRouter.post("/:blogId", multer({ storage: cloudinaryStorage }).single("blogPic"), async (req, res, next) => {
     try {
       console.log(req.file)
       const extension = extname(req.file.originalname) // someimage.png --> 7d7d.png
