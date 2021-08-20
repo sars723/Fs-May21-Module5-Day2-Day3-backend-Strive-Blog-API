@@ -4,6 +4,7 @@ import listEndpoints from "express-list-endpoints"
 import authorsRouter from "./services/authors/index.js"
 import blogsRouter from "./services/blogs/index.js"
 import filesRouter from "./services/files/index.js"
+import usersRouter from "./services/users/index.js"
 import { notFoundErrorHandler, forbiddenErrorHandler, badRequestErrorHandler, genericServerErrorHandler } from "./errorHandlers.js"
 import { join } from "path"
 const server = express()
@@ -35,6 +36,7 @@ server.use("/authors", authorsRouter)//to let server know about router
 server.use("/blogs", blogsRouter)
 
 server.use("/files", filesRouter)
+server.use("/users", usersRouter)
 
 
 server.use(notFoundErrorHandler)

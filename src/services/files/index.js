@@ -10,7 +10,7 @@ import { pipeline } from "stream"
 import { getPDFReadableStream } from "../../lib/pdf.js"
 
 const cloudinaryStorage = new CloudinaryStorage({
-  cloudinary, // short hand of _____cloudinary: cloudinary____ // grabs cloudinary_url from .env
+ cloudinary, // short hand of _____cloudinary: cloudinary____ // grabs cloudinary_url from .env
   params: {
       // optional params
       folder: "files"
@@ -25,7 +25,7 @@ filesRouter.post("/:blogId", multer({ storage: cloudinaryStorage }).single("blog
       console.log(req.file.originalname)
       const fileName = `${req.params.blogId}${extension}`
       const url = `http://localhost:3006/${fileName}`
-      await saveBlogsPicture(fileName, req.file.buffer)
+    /*   await saveBlogsPicture(fileName, req.file.buffer) */
       // FİND BLOG BY ID AND UPDATE COVER FIELD
       let  blogs = await  getBlogs()
       console.log(url)
