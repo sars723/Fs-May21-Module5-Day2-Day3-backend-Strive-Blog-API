@@ -31,7 +31,8 @@ blogsRouter.get("/", async (req, res, next) => {
     }
 })
 
-blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, checkValidationResult, async (req, res, next) => {
+blogsRouter.post("/", /* blogsValidationMiddleware */ checkBlogPostSchema,
+checkValidationResult, async (req, res, next) => {
     try {
         const errorsList = validationResult(req)
         if (!errorsList.isEmpty()) {
@@ -87,7 +88,8 @@ blogsRouter.post("/", /* blogsValidationMiddleware */checkValidationResult, chec
 })
 
 //comment
-blogsRouter.post("/:id/comments", /* blogsValidationMiddleware */checkValidationResult, checkValidationResult, async (req, res, next) => {
+blogsRouter.post("/:id/comments", /* blogsValidationMiddleware */ checkBlogPostSchema,
+checkValidationResult, async (req, res, next) => {
     try {
         const errorsList = validationResult(req)
         if (!errorsList.isEmpty()) {
@@ -113,7 +115,8 @@ blogsRouter.post("/:id/comments", /* blogsValidationMiddleware */checkValidation
 })
 
 //cover
-blogsRouter.post("/:id/uploadCover", /* blogsValidationMiddleware */checkValidationResult, checkValidationResult, async (req, res, next) => {
+blogsRouter.post("/:id/uploadCover", /* blogsValidationMiddleware */ checkBlogPostSchema,
+checkValidationResult, async (req, res, next) => {
     try {
         const errorsList = validationResult(req)
         if (!errorsList.isEmpty()) {
