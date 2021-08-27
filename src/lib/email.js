@@ -12,4 +12,5 @@ export const sendEmail = async recipient => {
   }
 
   await sgMail.send(msg)
+  
 }
